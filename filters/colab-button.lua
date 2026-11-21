@@ -1,0 +1,63 @@
+-- Adds an "Open in Colab" button to every page rendered from a Jupyter notebook.
+-- The Colab URL is built from the notebook's path in the repository, so new
+-- notebooks get a working button automatically.
+
+-- The branch or tag to open: the release workflow sets COLAB_REF to the version tag, so the
+-- button opens the same notebook the page shows; local and main builds use main.
+local COLAB_REF = os.getenv("COLAB_REF")
+if not COLAB_REF or COLAB_REF == "" then
+  COLAB_REF = "main"
+end
+local COLAB_BASE = "https://colab.research.google.com/github/BredaUniversityADSAI/introduction-to-ml/blob/" .. COLAB_REF .. "/"
+
+local function repo_relative_path()
+  local input = quarto.doc.input_file
+  local root = quarto.project.directory
+  if not input or not root or not input:match("%.ipynb$") then
+    return nil
+  end
+  local prefix = root:gsub("/$", "") .. "/"
+  if input:sub(1, #prefix) ~= prefix then
+    return nil
+  end
+  return input:sub(#prefix + 1)
+end
+
+-- The badge image is served from images/icons/ (no request to Google until the
+-- visitor clicks). Raw HTML is not rewritten by Quarto, so the path is made
+-- relative to the page: one "../" per folder level of the notebook.
+local function badge_src(path)
+  local _, depth = path:gsub("/", "")
+  return string.rep("../", depth) .. "images/icons/colab-badge.svg"
+end
+
+local function button_html(url, path)
+  return [[
+<p class="colab-launch">
+  <a href="]] .. url .. [[" target="_blank" rel="noopener">
+    <img src="]] .. badge_src(path) .. [[" alt="Open In Colab">
+  </a>
+</p>
+]]
+end
+
+function Pandoc(doc)
+  if not quarto.doc.is_format("html") then
+    return doc
+  end
+  local path = repo_relative_path()
+  if not path then
+    return doc
+  end
+  local button = pandoc.RawBlock("html", button_html(COLAB_BASE .. path, path))
+
+  -- Place the button directly below the page title. Notebooks whose title is
+  -- a leading "# Heading" keep that heading in the body, so go after it.
+  local first = doc.blocks[1]
+  if first and first.t == "Header" and first.level == 1 then
+    doc.blocks:insert(2, button)
+  else
+    doc.blocks:insert(1, button)
+  end
+  return doc
+end

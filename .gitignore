@@ -1,0 +1,39 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Files learners create in the DataLab notebooks (data/README.md)
+data/002_processed_data/*
+!data/002_processed_data/starter_dataset.xlsx
+
+# Your submissions and the scorer's log (score_log.csv) next to the two sample submissions (data/README.md)
+data/003_test_data/*
+!data/003_test_data/classification_sample_submission.csv
+!data/003_test_data/regression_sample_submission.csv
+
+# Models saved by the notebooks; CatBoost training logs (Gradient Boosting notebook)
+models/*
+!models/.gitkeep
+catboost_info/
+
+# Quarto
+.quarto/
+_book/
+
+# macOS
+.DS_Store
+/.quarto/
+**/*.quarto_ipynb
+
+# claude
+CLAUDE.md
+.claude/
+
+# local review notes
+review.txt
+# redirect pages for GitHub Pages (tools/make_redirects.py)
+_redirect/

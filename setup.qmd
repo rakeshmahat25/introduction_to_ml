@@ -1,0 +1,354 @@
+---
+title: "Set Up Your Computer"
+---
+
+The course is a GitHub repository: it holds the notebooks, the pages of this website, the data and the scorer. You make your own copy of this repository on GitHub, download your copy to your computer and work in it there. Each time you save your work to your copy on GitHub, you have a backup and a history of your work, and you can continue on another computer.
+
+```{=html}
+<div class="route-figure is-single">
+  <figure class="route-card">
+    <p class="route-card-label is-good">How it works</p>
+    <p class="route-card-title">Your own copy of the course</p>
+    <svg viewBox="0 0 360 392" role="img" aria-labelledby="sf-title">
+      <title id="sf-title">The course repository on GitHub is copied once into your own private repository with "Use this template". You clone your repository once to your computer, and after each session you commit and push your work back to it.</title>
+      <defs>
+        <marker id="sf-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="rf-arrowhead" d="M1 1.5 L8.5 5 L1 8.5"/>
+        </marker>
+      </defs>
+      <g class="sf-box sf-course">
+        <rect x="20" y="12" width="320" height="66" rx="14"/>
+        <text class="sf-title" x="180" y="36">Course repository on GitHub</text>
+        <text class="sf-sub" x="180" y="58">BredaUniversityADSAI/introduction-to-ml</text>
+      </g>
+      <g class="rf-link">
+        <path d="M180 80 V140" marker-end="url(#sf-arrow)"/>
+      </g>
+      <text class="sf-label sf-left" x="192" y="104">Use this template</text>
+      <text class="sf-note sf-left" x="192" y="121">once</text>
+      <g class="sf-box sf-mine">
+        <rect x="20" y="142" width="320" height="66" rx="14"/>
+        <text class="sf-title" x="180" y="166">Your repository on GitHub</text>
+        <text class="sf-sub" x="180" y="188">private: only you can see it</text>
+      </g>
+      <g class="rf-link">
+        <path d="M120 210 V300" marker-end="url(#sf-arrow)"/>
+        <path d="M240 300 V210" marker-end="url(#sf-arrow)"/>
+      </g>
+      <text class="sf-label sf-right" x="110" y="246">Clone</text>
+      <text class="sf-note sf-right" x="110" y="263">once</text>
+      <text class="sf-label sf-left" x="250" y="246">Commit, push</text>
+      <text class="sf-note sf-left" x="250" y="263">after each session</text>
+      <g class="sf-box sf-local">
+        <rect x="20" y="302" width="320" height="66" rx="14"/>
+        <text class="sf-title" x="180" y="326">Your computer</text>
+        <text class="sf-sub" x="180" y="348">VS Code: you run the notebooks here</text>
+      </g>
+    </svg>
+    <figcaption>You copy the course once. From then on, you work on your computer and save your work to your own repository.</figcaption>
+  </figure>
+</div>
+```
+
+Your copy is private, so your answers to the exercises stay yours. It is also a snapshot: it keeps the course version you started with, and later changes to the course don't reach it (see [Updates](#updates)).
+
+You need a free GitHub account and three tools:
+
+- **Git**, which keeps track of the changes to your files and sends them to GitHub;
+- **uv**, which installs the right Python version (3.13) and every package the course uses. You don't need to install Python yourself;
+- **VS Code**, the editor in which you open and run the notebooks.
+
+The setup takes about 30 minutes and needs about 3 GB of disk space.
+
+## 1. Create a GitHub account
+
+Sign up at [github.com](https://github.com/signup). The free plan is all you need. If you already have an account, you can use it.
+
+## 2. Install Git
+
+::: {.panel-tabset group="os"}
+
+### <i class="bi bi-windows" aria-hidden="true"></i> Windows
+
+Open PowerShell: click Start, type `PowerShell` and open "Windows PowerShell". Check whether Git is installed:
+
+```powershell
+git --version
+```
+
+If you see a version number, such as `git version 2.56.1.windows.1`, Git is installed: go to step 3.
+
+If PowerShell says that `git` is not recognized, install Git:
+
+```powershell
+winget install --id Git.Git -e --source winget
+```
+
+If PowerShell says that `winget` is not recognized either, download the installer from [git-scm.com](https://git-scm.com/install/windows) instead, run it and keep the default options.
+
+Close PowerShell, open it again and check with `git --version` that Git now works.
+
+### <i class="bi bi-apple" aria-hidden="true"></i> macOS
+
+Open Terminal: press Cmd+Space, type `Terminal` and press Enter. Check whether Git is installed:
+
+```bash
+git --version
+```
+
+If you see a version number, such as `git version 2.50.1 (Apple Git-155)`, Git is installed: go to step 3.
+
+If a window asks you to install the command line developer tools, click "Install". These tools from Apple include Git. If no window opens and Terminal says that `git` is not found, start the installation yourself:
+
+```bash
+xcode-select --install
+```
+
+When the installation is done, check with `git --version` that Git now works.
+
+### <i class="bi bi-ubuntu" aria-hidden="true"></i> Linux
+
+Open a terminal (on Ubuntu: Ctrl+Alt+T). Check whether Git is installed:
+
+```bash
+git --version
+```
+
+If you see a version number, such as `git version 2.43.0`, Git is installed: go to step 3.
+
+If the terminal says that `git` is not found, install it with the package manager of your distribution. On Ubuntu and Debian:
+
+```bash
+sudo apt update
+sudo apt install git
+```
+
+On Fedora:
+
+```bash
+sudo dnf install git
+```
+
+For other distributions, see [git-scm.com](https://git-scm.com/install/linux). Then check with `git --version` that Git now works.
+
+:::
+
+## 3. Install uv
+
+uv installs Python and the packages of the course in step 7, so you don't need to install Python yourself. In the terminal, check whether uv is installed:
+
+```bash
+uv --version
+```
+
+If you see a version number, such as `uv 0.11.2`, uv is installed: go to step 4. If the terminal says that `uv` is not found or not recognized, install it:
+
+::: {.panel-tabset group="os"}
+
+### <i class="bi bi-windows" aria-hidden="true"></i> Windows
+
+In PowerShell:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+### <i class="bi bi-apple" aria-hidden="true"></i> macOS
+
+In Terminal:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### <i class="bi bi-ubuntu" aria-hidden="true"></i> Linux
+
+In the terminal:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+:::
+
+Close the terminal, open it again and check with `uv --version` that uv now works. Other ways to install uv are in the [uv documentation](https://docs.astral.sh/uv/getting-started/installation/).
+
+## 4. Install VS Code
+
+::: {.panel-tabset group="os"}
+
+### <i class="bi bi-windows" aria-hidden="true"></i> Windows
+
+Click Start and type `Visual Studio Code`. If it is there, open it: VS Code is installed, go to step 5.
+
+If not, download the Windows installer from [code.visualstudio.com](https://code.visualstudio.com/download), run it and keep the default options. Then open VS Code to check that it works.
+
+### <i class="bi bi-apple" aria-hidden="true"></i> macOS
+
+Press Cmd+Space and type `Visual Studio Code`. If it is there, open it: VS Code is installed, go to step 5.
+
+If not, download the macOS version from [code.visualstudio.com](https://code.visualstudio.com/download). Drag "Visual Studio Code" from your Downloads folder to the Applications folder, then open it from there to check that it works.
+
+### <i class="bi bi-ubuntu" aria-hidden="true"></i> Linux
+
+Search your applications for `Visual Studio Code`. If it is there, open it: VS Code is installed, go to step 5.
+
+If not, download it from [code.visualstudio.com](https://code.visualstudio.com/download): the `.deb` file for Ubuntu and Debian, the `.rpm` file for Fedora. Open the file to install it, then open VS Code to check that it works.
+
+:::
+
+## 5. Make your own copy of the course
+
+The tools are ready. In this step you make your own copy of the course on GitHub, and in step 6 you download it to your computer.
+
+::: {.callout-tip}
+## New to Git and GitHub?
+
+You can follow the steps below without knowing Git or GitHub. If you want to understand what happens in them, GitHub has two free courses of less than an hour each. You don't need to take them before you start.
+
+- [Introduction to GitHub](https://github.com/skills/introduction-to-github): repositories, branches and commits on GitHub.
+- [Introduction to Git](https://github.com/skills/introduction-to-git): Git on your own computer, in the terminal and in VS Code.
+:::
+
+1. Open [Create your copy of the course](https://github.com/new?template_owner=BredaUniversityADSAI&template_name=introduction-to-ml&owner=@me&name=introduction-to-ml&visibility=private) and sign in to GitHub if it asks you to. The link opens GitHub's "Create a new repository" page with the course as the template.
+2. Check the form: "Owner" is your GitHub username, "Repository name" is `introduction-to-ml` and the visibility is "Private".
+3. Click "Create repository".
+
+After a few seconds, your copy is at `github.com/<your-username>/introduction-to-ml`.
+
+If the link doesn't fill in the form, open the [course repository](https://github.com/BredaUniversityADSAI/introduction-to-ml), click "Use this template" (top right), then "Create a new repository", and fill in the same form.
+
+## 6. Download your copy
+
+In VS Code:
+
+1. Open the Command Palette ("View" > "Command Palette…"), type `Git: Clone` and press Enter.
+2. Choose "Clone from GitHub". The first time, VS Code asks you to sign in to GitHub: click "Allow", sign in in your browser and go back to VS Code. Then choose `<your-username>/introduction-to-ml` from the list.
+3. VS Code asks for a folder. Choose the folder in which you want to keep the course, for example Documents: VS Code creates a new folder `introduction-to-ml` in it and downloads your copy there. When VS Code asks whether to open the repository, click "Open".
+4. If VS Code asks whether you trust the authors of the files in this folder, click "Yes, I trust the authors".
+5. VS Code offers to install the extensions the course recommends, in a message at the bottom right: Python and Jupyter, which run the notebooks, and Quarto (optional), which previews the `.qmd` pages. Click "Install". If you don't see the message, open "View" > "Extensions", search for Python and for Jupyter (both by Microsoft) and install them.
+
+With the sign-in, VS Code can download your private repository and, later, send your work to it. You sign in only once.
+
+In the Explorer on the left you see the course in the folder `modules/`, one folder per module, each with its Self-study and its DataLab iteration, and the files numbered in the order you work through them.
+
+## 7. Install Python and the packages
+
+Open a terminal in VS Code ("Terminal" > "New Terminal"). It opens in the course folder: the line where you type shows `introduction-to-ml`. If it shows another folder, open the course folder with "File" > "Open Folder…" and open a new terminal. Then:
+
+```bash
+uv sync
+```
+
+The first time, this takes a few minutes. uv creates the course environment, a `.venv` folder inside the course folder, and installs all packages into it. If your computer doesn't have Python 3.13, uv downloads it into its own folder in your user account. Check that it works:
+
+```bash
+uv run python -c "import sklearn, rdkit, xgboost, lightgbm; print('All set')"
+```
+
+If you see `All set`, the packages are ready. On macOS, if this fails with a message about `libomp`, install the OpenMP runtime with [Homebrew](https://brew.sh/) and try again:
+
+```bash
+brew install libomp
+```
+
+## 8. Check the notebooks
+
+1. In the Explorer, open `modules/1_foundations/1_self_study/02_getting_started.ipynb`.
+2. Click "Select Kernel" in the top right and choose "Python Environments". Then choose `introduction-to-ml (3.13…)`: the course environment, with `.venv` in its path. In other notebooks, VS Code usually selects it for you; if not, choose it in the same way.
+3. Click "Run All" at the top of the notebook.
+
+The setup works if every cell runs without a red error message. See [Jupyter notebooks in VS Code](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) for more about working with notebooks.
+
+In any notebook, this cell shows which Python it uses and the folder it runs in:
+
+```python
+import sys
+from pathlib import Path
+print(sys.executable)  # should be inside the course's .venv folder
+print(Path.cwd())      # the folder the notebook runs in
+```
+
+In VS Code, each notebook runs in its own folder (the course sets this in `.vscode/settings.json`). The notebooks read the data with paths relative to that folder: a DataLab notebook in `modules/2_data_preparation/2_datalab/` reads `../../../data/...`. Files you create (such as the processed CSV files) go in `data/002_processed_data/`, models in `models/`.
+
+::: {.callout-tip}
+## Your setup is complete
+
+You are ready to start the course with [Module 1](modules/1_foundations/00_overview.qmd), and then follow the Next link at the bottom of each page. You only do steps 1 to 8 once.
+
+The rest of this page is for while you work: how to save your work after each session, what is where in the course folder, how updates work and what to do if something goes wrong.
+:::
+
+## Save your work {#save-your-work}
+
+You work directly in the notebooks of your copy, on your computer. At the end of each session, you save your work to your repository on GitHub: that is your backup, and it lets you continue on another computer.
+
+### The first time: your name in Git {#git-name}
+
+Git records a name and an email address with each set of changes you save, called a **commit**. They are separate from your GitHub sign-in. Check whether Git already has them, in the VS Code terminal:
+
+```bash
+git config user.name
+git config user.email
+```
+
+If both commands print a value, go on to the next section. If one of them prints nothing, set it, with the email address of your GitHub account:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+```
+
+### After each session
+
+1. Open "Source Control" in the bar on the left of VS Code. It lists the files you changed.
+2. Type a short message that says what you did, for example `Module 1: classification exercises`.
+3. Click "Commit". If VS Code asks whether to stage all your changes, choose "Yes".
+4. Click "Sync Changes" to send your commits to GitHub.
+
+Git ignores the files the notebooks create in `data/002_processed_data/`, `data/003_test_data/` and `models/`, so they stay on your computer only. On another computer, run the notebooks that create them again.
+
+## What is where
+
+| Folder | Contents |
+|---|---|
+| `modules/` | The course, one folder per module: the notebooks and the pages you see on this website |
+| `data/` | All datasets of the project (see `data/README.md`) |
+| `models/` | Models you save while working through the notebooks |
+| `tools/` | The scorer for your test-set predictions (`score.py`) |
+
+Each module folder has the module overview `00_overview.qmd`, the Self-study in `1_self_study/` and the DataLab in `2_datalab/`. The files are numbered in the order of this website, so you work through the folders from top to bottom, as with the Next link on the website. The `.qmd` files are the pages of this website: read them here, where the figures, videos and interactive parts work. The notebooks (`.ipynb`) are the files you open and run.
+
+## Updates {#updates}
+
+Your copy keeps the course version you started with; its number is the `version` in `pyproject.toml`. We recommend that you finish the course with this version: your notebooks already contain your work, and the course stays the same while you work through it.
+
+This website always shows the latest version. If a page and your notebook differ, [What's New](whats-new.qmd) says what changed. If a later version fixes something you need, such as a mistake in a notebook, open the file in the [course repository](https://github.com/BredaUniversityADSAI/introduction-to-ml) and copy the part you need into your own notebook.
+
+## Without a GitHub account
+
+You can also download the course without a GitHub account. Follow steps 2 to 4, then download the course in a terminal, in the folder where you keep your projects:
+
+```bash
+git clone https://github.com/BredaUniversityADSAI/introduction-to-ml.git
+```
+
+Open the new folder `introduction-to-ml` in VS Code ("File" > "Open Folder…") and continue with step 6, item 4.
+
+You can't save your work to GitHub this way, so make your own backups. You can get a later version of the course with `git pull` and `uv sync`, but `git pull` refuses to overwrite notebooks you have changed. To avoid that, work in a copy of each notebook (for example `04_regression_mine.ipynb`) and keep the originals untouched.
+
+## If something goes wrong
+
+- **`uv` or `git`: command not found.** Close and reopen the terminal after installing. On Windows, use PowerShell. If VS Code was open during the installation, restart VS Code too.
+- **VS Code doesn't offer "Clone from GitHub", or says Git is not installed.** Install Git (step 2) and restart VS Code.
+- **VS Code asks you to configure `user.name` and `user.email`.** Set them as in [The first time: your name in Git](#git-name) and commit again.
+- **A package is missing or behaves strangely.** Delete the `.venv` folder and run `uv sync` again.
+- **`ModuleNotFoundError` in a notebook, although the check above printed `All set`.** The notebook runs in another Python. Click the kernel name in the top right of the notebook and choose `introduction-to-ml (3.13…)`, the environment with `.venv` in its path.
+- **`FileNotFoundError` for a data file.** Print `Path.cwd()` (see step 8) and check the path relative to that folder. If the missing file is `HOPV_homolumo_processed.csv` or `xy_df_hopv.csv`, an earlier notebook hasn't saved it yet: each Iteration 2 and 3 notebook says at the top which files it needs and which notebook creates them.
+- **You want an extra package.** Run `uv add <package-name>` in the course folder and restart the notebook kernel. Don't use `pip install` inside a notebook: the package is lost at the next `uv sync`. `uv add` changes `pyproject.toml` and `uv.lock`: commit them with your work.
+- **Do not upgrade `rdkit`.** It is pinned to version 2025.9.3 on purpose: other versions compute some molecular descriptors differently from the course data.
+- Still stuck? Ask in the course [Discussions](https://github.com/BredaUniversityADSAI/introduction-to-ml/discussions/categories/q-a). Say which operating system you use and paste the full error message.
+
+## Only a quick look? Google Colab
+
+Every notebook page on this website has an "Open in Colab" button. Colab runs the notebook in your browser, without installing anything, and the notebooks show how to load the data there. It is fine for a quick look or a single notebook. For the whole course, use the local setup: Colab forgets the files you create when the session ends, and the DataLab notebooks depend on files from earlier notebooks. If you still continue a DataLab notebook chain in Colab, download the files a notebook creates before the session ends, and upload them at the start of the next one.

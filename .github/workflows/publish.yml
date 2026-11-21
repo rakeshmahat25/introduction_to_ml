@@ -1,0 +1,65 @@
+name: Redirect GitHub Pages to ai.buas.nl
+
+# The course is served at https://ai.buas.nl/open-courses/introduction-to-ml/ (tagged releases,
+# see release.yml). GitHub Pages only forwards the old address: every page redirects to the same
+# page on ai.buas.nl (tools/make_redirects.py).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # Only in the course repository, not in learners' copies of it (Set Up Your Computer).
+    if: github.repository == 'BredaUniversityADSAI/introduction-to-ml'
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+        with:
+          enable-cache: true
+
+      - name: Install Python
+        run: uv python install
+
+      - name: Install Python dependencies
+        run: uv sync --frozen
+
+      - name: Render Quarto website (for the list of pages)
+        run: quarto render
+
+      - name: Replace the pages with redirects to ai.buas.nl
+        run: python3 tools/make_redirects.py _book _redirect
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload the redirect pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _redirect
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

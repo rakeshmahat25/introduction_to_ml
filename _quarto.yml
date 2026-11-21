@@ -1,0 +1,203 @@
+project:
+  type: website
+  output-dir: _book
+  resources:
+    - fonts/
+    - images/icons/
+    - images/favicon/
+    - images/social-card.jpg
+    # Scripts of the interactive pages (fit-demo.js, quiz.js), loaded with <script> tags.
+    - assets/
+  # Redirect pages for the old addresses of pages that moved (tools/old_page_urls.py).
+  post-render: tools/old_page_urls.py
+
+website:
+  title: "Introduction to Machine Learning"
+  page-navigation: true
+  site-url: https://ai.buas.nl/open-courses/introduction-to-ml/
+  # Browser-tab icon: the department site's icon (copied from adsai-department-site).
+  favicon: images/favicon/favicon.png
+  # Link previews (WhatsApp, Teams, LinkedIn, ...): Open Graph and Twitter tags. The
+  # image is set for all pages further down (top-level `image:`).
+  description: "A free, open machine-learning course from Breda University of Applied Sciences: learn the concepts, apply them to a real client problem, and test your solution on unseen molecules."
+  open-graph: true
+  twitter-card:
+    card-style: summary_large_image
+
+  page-footer:
+    left: >-
+      © 2025–2026 [Breda University of Applied Sciences](https://www.buas.nl) ·
+      Content [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), code
+      [MIT](https://github.com/BredaUniversityADSAI/introduction-to-ml/blob/main/LICENSE.md)
+    right: "[Applied Data Science & AI](https://ai.buas.nl/)"
+
+  # "Report an issue" link (with GitHub icon) under each page's table of contents.
+  repo-url: https://github.com/BredaUniversityADSAI/introduction-to-ml
+  repo-actions: [issue]
+
+  # The sidebar defines both the visual hierarchy and the previous/next order. It follows the
+  # course order: six modules, each a Self-study followed by the DataLab iteration with the same
+  # number (Module -> Self-study / DataLab -> page). A book's `chapters`/`part` cannot express
+  # this (it allows only one level of parts).
+  sidebar:
+    style: floating
+    collapse-level: 1
+    # Icons under the sidebar title. The dark-mode toggle is added next to
+    # them automatically because a dark theme is configured below.
+    tools:
+      - icon: github
+        href: https://github.com/BredaUniversityADSAI/introduction-to-ml
+        aria-label: GitHub repository
+      - icon: chat-dots
+        href: https://github.com/BredaUniversityADSAI/introduction-to-ml/discussions
+        aria-label: Discussions (questions and help)
+
+    contents:
+    - index.qmd
+    - href: course-guide.qmd
+      text: "Course Guide"
+    - href: setup.qmd
+      text: "Set Up Your Computer"
+
+    # One folder per module (modules/N_name/): the module overview (00_overview.qmd, the
+    # section's page), 1_self_study/ and 2_datalab/, files numbered in this order. Keep the
+    # file numbers in step with this order. `text` sets the sidebar label; the page keeps its
+    # own heading. Iterations 4 to 6 are a single page, so they are a link, not a section.
+    - section: "1. Foundations of Machine Learning"
+      href: modules/1_foundations/00_overview.qmd
+      contents:
+        - section: "Self-study"
+          contents:
+            - href: modules/1_foundations/1_self_study/01_what_is_machine_learning.qmd
+              text: "What is Machine Learning?"
+            - href: modules/1_foundations/1_self_study/02_getting_started.ipynb
+              text: "Getting Started"
+            - href: modules/1_foundations/1_self_study/03_classification.ipynb
+              text: "Classification"
+            - href: modules/1_foundations/1_self_study/04_regression.ipynb
+              text: "Regression"
+            - href: modules/1_foundations/1_self_study/05_unsupervised_learning.ipynb
+              text: "Unsupervised Learning"
+            - href: modules/1_foundations/1_self_study/06_end_to_end_ml.ipynb
+              text: "End-to-End ML Project"
+            - href: modules/1_foundations/1_self_study/07_review.qmd
+              text: "Review"
+        - section: "DataLab: Iteration 1"
+          href: modules/1_foundations/2_datalab/00_overview.qmd
+          contents:
+            - modules/1_foundations/2_datalab/01_business_understanding.qmd
+            - modules/1_foundations/2_datalab/02_data_understanding.qmd
+            - modules/1_foundations/2_datalab/03_classification.ipynb
+            - modules/1_foundations/2_datalab/04_regression.ipynb
+            - modules/1_foundations/2_datalab/05_clustering.ipynb
+
+    - section: "2. Data Preparation & Understanding"
+      href: modules/2_data_preparation/00_overview.qmd
+      contents:
+        - section: "Self-study"
+          contents:
+            - href: modules/2_data_preparation/1_self_study/01_data_prep.ipynb
+              text: "Data Preparation"
+            - href: modules/2_data_preparation/1_self_study/02_data_understanding.ipynb
+              text: "Data Understanding"
+            - href: modules/2_data_preparation/1_self_study/03_leakage_and_distribution_shift.qmd
+              text: "Leakage & Distribution Shift"
+            - href: modules/2_data_preparation/1_self_study/04_review.qmd
+              text: "Review"
+        - section: "DataLab: Iteration 2"
+          href: modules/2_data_preparation/2_datalab/00_overview.qmd
+          contents:
+            - modules/2_data_preparation/2_datalab/01_understanding_smiles.qmd
+            - modules/2_data_preparation/2_datalab/02_understanding_stability_data.ipynb
+            - modules/2_data_preparation/2_datalab/03_understanding_homolumo_data.ipynb
+            - modules/2_data_preparation/2_datalab/04_data_preparation.ipynb
+            - modules/2_data_preparation/2_datalab/05_baseline.ipynb
+
+    - section: "3. Modeling & Evaluation"
+      href: modules/3_modeling_and_evaluation/00_overview.qmd
+      contents:
+        - section: "Self-study"
+          contents:
+            - href: modules/3_modeling_and_evaluation/1_self_study/01_modeling_and_evaluation.ipynb
+              text: "Modeling & Evaluation"
+            - href: modules/3_modeling_and_evaluation/1_self_study/02_linear_regression.ipynb
+              text: "Linear Regression"
+            - href: modules/3_modeling_and_evaluation/1_self_study/03_logistic_regression.ipynb
+              text: "Logistic Regression"
+            - href: modules/3_modeling_and_evaluation/1_self_study/04_clustering.ipynb
+              text: "Clustering"
+            - href: modules/3_modeling_and_evaluation/1_self_study/05_review.qmd
+              text: "Review"
+        - section: "DataLab: Iteration 3"
+          href: modules/3_modeling_and_evaluation/2_datalab/00_overview.qmd
+          contents:
+            - modules/3_modeling_and_evaluation/2_datalab/01_classification.ipynb
+            - modules/3_modeling_and_evaluation/2_datalab/02_regression.ipynb
+            - modules/3_modeling_and_evaluation/2_datalab/03_clustering.ipynb
+
+    - section: "4. Advanced Scikit-Learn"
+      href: modules/4_advanced_scikit_learn/00_overview.qmd
+      contents:
+        - section: "Self-study"
+          contents:
+            - href: modules/4_advanced_scikit_learn/1_self_study/01_pipelines_and_columntransformer.ipynb
+              text: "Pipelines & ColumnTransformer"
+            - href: modules/4_advanced_scikit_learn/1_self_study/02_review.qmd
+              text: "Review"
+        - href: modules/4_advanced_scikit_learn/2_datalab/00_overview.qmd
+          text: "DataLab: Iteration 4"
+
+    - section: "5. Tree-Based Algorithms"
+      href: modules/5_tree_based_algorithms/00_overview.qmd
+      contents:
+        - section: "Self-study"
+          contents:
+            - href: modules/5_tree_based_algorithms/1_self_study/01_decision_trees.ipynb
+              text: "Decision Trees"
+            - href: modules/5_tree_based_algorithms/1_self_study/02_random_forests.ipynb
+              text: "Random Forests"
+            - href: modules/5_tree_based_algorithms/1_self_study/03_gradient_boosting.ipynb
+              text: "Gradient Boosting"
+            - href: modules/5_tree_based_algorithms/1_self_study/04_review.qmd
+              text: "Review"
+        - href: modules/5_tree_based_algorithms/2_datalab/00_overview.qmd
+          text: "DataLab: Iteration 5"
+
+    - section: "6. Applied ML Research"
+      href: modules/6_applied_ml_research/00_overview.qmd
+      contents:
+        - section: "Self-study"
+          contents:
+            - href: modules/6_applied_ml_research/1_self_study/01_communicating_technical_work.qmd
+              text: "Communicating Technical Work"
+            - href: modules/6_applied_ml_research/1_self_study/02_understanding_ml_research.qmd
+              text: "Understanding ML Research"
+            - href: modules/6_applied_ml_research/1_self_study/03_from_research_to_practice.qmd
+              text: "Research to Practice"
+            - href: modules/6_applied_ml_research/1_self_study/04_review.qmd
+              text: "Review"
+        - href: modules/6_applied_ml_research/2_datalab/00_overview.qmd
+          text: "DataLab: Iteration 6"
+
+    - href: whats-new.qmd
+      text: "What's New"
+
+
+# Link-preview image of every page. Without this, Quarto takes the first image on a page
+# (the logo on the homepage, an SVG elsewhere), and WhatsApp cannot show SVGs.
+image: https://ai.buas.nl/open-courses/introduction-to-ml/images/social-card.jpg
+image-alt: "Introduction to Machine Learning: learn machine learning by solving a real problem."
+
+format:
+  html:
+    theme:
+      light: [cosmo, theme-fonts.scss]
+      dark: [cosmo, theme-fonts.scss, theme-dark.scss]
+    css: styles.css
+    include-in-header:
+      text: |
+        <link rel="apple-touch-icon" href="https://ai.buas.nl/open-courses/introduction-to-ml/images/favicon/apple-touch-icon.png">
+    filters:
+      - filters/colab-button.lua
+    toc: true
+    number-sections: false
